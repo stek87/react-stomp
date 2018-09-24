@@ -193,8 +193,9 @@ class SockJsClient extends React.Component {
 
   _connect = () => {
     this._initStompClient()
-    this.client.connect(this.props.headers, () => {
+    this.client.connect(this.props.headers, (frame) => {
       this.setState({ connected: true })
+        localStorage.setItem("connectionId", frame.headers['user-name']);
       this.props.topics.forEach((topic) => {
         this._subscribe(topic)
       })
